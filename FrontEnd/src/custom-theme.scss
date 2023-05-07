@@ -1,0 +1,21 @@
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$FrontEnd-primary: mat.define-palette(mat.$orange-palette);
+$FrontEnd-accent:  mat.define-palette(mat.$blue-grey-palette, A100, A200, A400);
+
+
+$FrontEnd-warn: mat.define-palette(mat.$red-palette);
+
+$FrontEnd-theme: mat.define-light-theme((
+  color: (
+    primary: $FrontEnd-primary,
+    accent: $FrontEnd-accent,
+    warn: $FrontEnd-warn,
+  )
+));
+
+@include mat.all-component-themes($FrontEnd-theme);
+

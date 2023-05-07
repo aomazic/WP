@@ -1,0 +1,35 @@
+<div class="main">
+  <div class="form-container">
+    <form method="post">
+      <div class="logo">
+        <img ngSrc="assets/img/logo.png" alt="Aperture Science Logo" height="128" width="128">
+        <h2>Aperture Science Registration Form</h2>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Username (Don't make it GLaDOS' job to remember you):</mat-label>
+        <input matInput type="text" id="username" name="username" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email (We won't send you spam, we promise!):</mat-label>
+        <input matInput type="email" id="email" name="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password (Its completely safe with us!):</mat-label>
+        <input matInput type="password" id="password" name="password" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password (Or face the neurotoxin!):</mat-label>
+        <input matInput type="password" id="confirmPassword" name="confirmPassword" required>
+      </mat-form-field>
+      <div class="check-box">
+        <mat-checkbox required>
+          I agree to all Aperture Science terms of service (We own you now)
+        </mat-checkbox>
+      </div>
+      <button mat-raised-button type="submit" color="accent">Register and Join the Enrichment Center!</button>
+    </form>
+  </div>
+</div>

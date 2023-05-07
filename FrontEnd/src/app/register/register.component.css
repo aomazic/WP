@@ -1,0 +1,72 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main{
+  background-image: url("src/assets/img/RegisterBack.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #f8f7fc;
+}
+
+form {
+  background-color: #f8f7fc;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #cfd8dc;
+  border-radius: 3em;
+  padding: 2em;
+}
+.logo{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 2em;
+}
+h2{
+  padding-left: 1em;
+}
+
+form input, form button {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+  padding-bottom: 0.5em;
+}
+
+mat-checkbox{
+float: left;
+}
+.check-box{
+  width: 100%;
+  padding-bottom: 0.5em;
+}
+
+button:hover{
+  background-color: #ff8c00!important;
+  color: white !important;
+
+}
+button:active {
+  background-color: #e65c00 !important;
+  color: white !important;
+}
+
+
+@media screen and (min-width: 968px) {
+  form {
+    width: 30%;
+  }
+}

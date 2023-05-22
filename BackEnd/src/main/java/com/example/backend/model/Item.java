@@ -1,7 +1,7 @@
 package com.example.backend.model;
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
+
 
 @Entity
 public class Item {

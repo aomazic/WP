@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private UserRole userRole;
     private Boolean locked;
     private Boolean enabled;
+    private int shoppingPoints;
 
     public User(String username, String password, String email,  UserRole userRole, Boolean locked, Boolean enabled) {
         this.username = username;
@@ -35,10 +36,18 @@ public class User implements UserDetails {
         this.userRole = userRole;
         this.locked = locked;
         this.enabled = enabled;
+        this.shoppingPoints = 0;
     }
 
     public User() {
 
+    }
+
+    public int getShoppingPoints() {
+        return shoppingPoints;
+    }
+    public void setShoppingPoints(int shoppingPoints) {
+        this.shoppingPoints = shoppingPoints;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

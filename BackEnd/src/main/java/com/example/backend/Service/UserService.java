@@ -21,12 +21,12 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final ConfirmationTokenService confirmationTokenService;
-
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
-
+    private final EmailService emailService;
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailService emailService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
+        this.emailService = emailService;
 
     }
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
     public String signUpUser(User user) {
         boolean userExists = userRepository.existsByEmail(user.getEmail());
         if (userExists) {
-            throw new IllegalStateException("email already taken");
+            return "User already exists";
         }
         else {
             String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
@@ -61,14 +61,26 @@ public class UserService implements UserDetailsService {
 
             );
             confirmationTokenService.saveConfirmationToken(confirmationToken);
-            return token;
+            String link = "http://localhost:8080/api/registration/confirm?token=" + token;
+            emailService.send(userToSave.getEmail(), userToSave.getUsername(), link);
+            return "Success";
 
         }
 
     }
 
-    public int enableUser(String email) {
-        return userRepository.enableUser(email);
+    public void enableUser(String email) {userRepository.enableUser(email);}
+
+
+    public User loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
+
+        if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            return user;
+        } else {
+            throw new IllegalStateException("Invalid password");
+        }
     }
 
 }

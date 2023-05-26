@@ -44,4 +44,8 @@ public class RegistrationService {
                 confirmationToken.getUser().getEmail());
         return "confirmed";
     }
+
+    public User login(String email, String password) {
+        return userService.loginUser(email, password);
+    }
 }

@@ -12,7 +12,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Email (We won't send you spam, we promise!):</mat-label>
-        <input matInput type="email" formControlName="email" name="email" required>
+        <input matInput type="email" formControlName="email" name="email"  required>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -23,9 +23,10 @@
       <mat-form-field appearance="fill">
         <mat-label>Confirm Password (Or face the neurotoxin!):</mat-label>
         <input matInput type="password" formControlName="confirmPassword" name="confirmPassword" required >
+        <mat-error *ngIf="passwordMismatch">Passwords do not match.</mat-error>
       </mat-form-field>
       <div class="check-box">
-        <mat-checkbox required>
+        <mat-checkbox formControlName="terms" required>
           I agree to all Aperture Science terms of service
         </mat-checkbox>
       </div>

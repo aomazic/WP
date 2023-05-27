@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {User} from "../user.model";
 import {RegistrationService} from "../registration.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 
@@ -11,17 +11,31 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
+
 export class RegisterComponent {
+
+  passwordMismatch : Boolean = false;
+
   registerForm = new FormGroup({
-    username: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl('')
+    username: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required),
+    terms: new FormControl('', Validators.required)
   });
 
   constructor(private registrationService: RegistrationService, private snackBar:  MatSnackBar) { }
 
   onRegister(): void {
+    if(this.registerForm.get('password')?.value != this.registerForm.get('confirmPassword')?.value){
+        this.passwordMismatch = true;
+        this.registerForm.get('confirmPassword')?.setValue('');
+        this.registerForm.get('password')?.setValue('');
+        return;
+    }
+    else this.passwordMismatch = false;
+
     const user: User = {
       username: this.registerForm.get('username')?.value || '',
       password: this.registerForm.get('password')?.value || '',
@@ -42,11 +56,6 @@ export class RegisterComponent {
       },
       error: (error) => {
         console.log(error);
-        if (error.error === 'email already taken') {
-          this.snackBar.open('Email already taken', 'Close', {
-            duration: 3000,
-          });
-        }
       },
       complete: () => {
         console.log('Registration successful!');
@@ -54,4 +63,5 @@ export class RegisterComponent {
 
     });
   }
+
 }

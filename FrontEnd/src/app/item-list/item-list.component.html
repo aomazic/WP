@@ -1,0 +1,128 @@
+<main>
+  <mat-tab-group color="accent">
+    <mat-tab label="All">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of items">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary" (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+
+    <mat-tab label="Devices">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of filterItemsByCategory('Devices')">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary"  (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+
+    <mat-tab label="Gadgets">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of filterItemsByCategory('Gadgets')">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary" (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+
+    <mat-tab label="Apparel">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of filterItemsByCategory('Apparel')">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary" (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+
+    <mat-tab label="Security">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of filterItemsByCategory('Security')">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary" (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+    <mat-tab label="Building Materials">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of filterItemsByCategory('Building Materials')">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary" (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+    <mat-tab label="Collectibles">
+      <section class="items">
+        <div class="item-list">
+          <div class="item-card" *ngFor="let item of filterItemsByCategory('Collectibles')">
+            <img [src]="item.imageUrl" alt="Item Image">
+            <div class="item-details">
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+              <p>Price: {{ item.price }}€</p>
+              <button mat-raised-button color="primary" (click)="addToCart(item)" class="add-to-cart">Add to Cart</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="openEditModal(item)" class="item-edit">Edit</button>
+              <button mat-raised-button color="primary" *ngIf="user?.userRole === 'ADMIN'" (click)="DeleteItem(item.id)" class="item-edit">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+  </mat-tab-group>
+
+</main>

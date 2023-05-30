@@ -20,8 +20,7 @@ public class Item {
 
 
     }
-    public Item(Long id, float price, String name, String description, String imageUrl, String category) {
-        this.id = id;
+    public Item(float price, String name, String description, String imageUrl, String category) {
         this.price = price;
         this.name = name;
         this.description = description;

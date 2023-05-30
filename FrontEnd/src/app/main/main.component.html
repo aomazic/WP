@@ -1,0 +1,99 @@
+<nav>
+  <div class="logo">
+    <img src="assets/img/fullLogo.png" alt="Aperture Science Logo">
+    <div class="slogan">"We do what we must because we can."</div>
+  </div>
+
+  <div  *ngIf="!isCheckout" class="search-bar">
+    <mat-form-field>
+      <input id="searchInput" matInput placeholder="Search" [(ngModel)]="searchTerm" (input)="filterItems()">
+      <button matSuffix mat-icon-button aria-label="Clear" class="clear" *ngIf="searchTerm" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="login">
+    <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{ closeMenu: menuButton }">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+        <div *ngIf="!user">
+          <form class="dropdown-menu" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()" (click)="$event.stopPropagation()">
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput type="text" formControlName="email" placeholder="Email">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" placeholder="Password">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" class="login-button">Login</button>
+          </form>
+          <button mat-raised-button color="primary" routerLink="/register" class="register-button">Register</button>
+        </div>
+        <div class="user-info" *ngIf="user">
+          <span class="username">Username: {{ user.username }}</span>
+          <span class="shopping-points">Shopping Points: {{ user.shoppingPoints }}</span>
+          <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+          <button mat-raised-button color="primary" class="admin-button" *ngIf="user?.userRole === 'ADMIN'" (click)="openModal()">Add Item</button>
+        </div>
+      </div>
+    </mat-menu>
+  </div>
+
+  <div class="cart">
+    <button mat-icon-button color="primary" [matMenuTriggerFor]="cartMenu" [matMenuTriggerData]="{ closeMenu: cartButton }">
+
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+  </div>
+    <mat-menu #cartMenu="matMenu">
+      <div class="cart-menu" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+        <div *ngIf="cart.length > 0" class="cart-menu">
+          <div class="cart-item" *ngFor="let cartItem of cart; let i = index">
+            <img [src]="cartItem.item.imageUrl" alt="Item Image">
+            <div class="cart-item-details">
+              <h3>{{ cartItem.item.name }}</h3>
+              <div class="cart-item-controls">
+                <input type="number" min="1" [(ngModel)]="cartItem.quantity" (input)="updateCartItem(cartItem)">
+                <button mat-icon-button aria-label="Remove" color="primary" (click)="removeFromCart(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              <p>Price: {{ cartItem.totalPrice }}€</p>
+            </div>
+          </div>
+          <p>Total price: {{ totalPrice }}€</p>
+          <button mat-raised-button color="primary" class="item-edit" *ngIf="!isCheckout" (click)="Checkout()">Checkout</button>
+        </div>
+        <div *ngIf="cart.length === 0" class="empty-cart">Your cart is empty.</div>
+      </div>
+    </mat-menu>
+
+
+</nav>
+
+<main>
+  <ng-container *ngIf="!isCheckout">
+    <app-item-list
+      [items]="items"
+      [user]="user"
+      [cart]="cart"
+      [totalPrice]="totalPrice"
+      (getAllItemsRequested)="getAllItems()"
+      (totalPriceChanged)="totalPrice = $event"
+    ></app-item-list>
+  </ng-container>
+
+  <ng-container *ngIf="isCheckout">
+    <app-checout
+      [cart]="cart"
+      [totalPrice]="totalPrice"
+      [shoppingPoints]="user?.shoppingPoints"
+      (cancelCheckoutRequested)="isCheckout = $event"
+    ></app-checout>
+  </ng-container>
+</main>

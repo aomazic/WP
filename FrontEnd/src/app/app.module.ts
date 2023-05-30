@@ -13,10 +13,27 @@ import {NgOptimizedImage} from "@angular/common";
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MainComponent } from './main/main.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import { AdItemModalComponent } from './ad-item-modal/ad-item-modal.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { EditItemModalComponent } from './edit-item-modal/edit-item-modal.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ItemListComponent } from './item-list/item-list.component';
+import { CheckoutComponent } from './checout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmEmailComponent,
+    MainComponent,
+    AdItemModalComponent,
+    EditItemModalComponent,
+    ItemListComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +46,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AppRoutingModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,7 +4,7 @@
 @include mat.core();
 
 $FrontEnd-primary: mat.define-palette(mat.$orange-palette);
-$FrontEnd-accent:  mat.define-palette(mat.$blue-grey-palette, A100, A200, A400);
+$FrontEnd-accent:  mat.define-palette(mat.$blue-palette, 300, 800, 700);
 
 
 $FrontEnd-warn: mat.define-palette(mat.$red-palette);

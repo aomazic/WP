@@ -4,6 +4,7 @@ import com.example.backend.Repo.UserRepository;
 import com.example.backend.Token.ConfirmationToken;
 import com.example.backend.model.User.User;
 import com.example.backend.model.User.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,7 @@ public class UserService implements UserDetailsService {
 
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailService emailService;
+    @Autowired
     public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailService emailService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -29,7 +31,7 @@ public class UserService implements UserDetailsService {
         this.emailService = emailService;
 
     }
-    private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
+    private final static String USER_NOT_FOUND_MSG = "Apologies! We couldn't find an account associated with the provided email address : %s";
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(
@@ -47,7 +49,7 @@ public class UserService implements UserDetailsService {
                     user.getUsername(),
                     encodedPassword,
                     user.getEmail(),
-                    UserRole.USER,
+                    UserRole.ADMIN,
                     false,
                     false
                     );
@@ -69,6 +71,12 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public User getUserByEmail(String email) {
+
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
+    }
+
     public void enableUser(String email) {userRepository.enableUser(email);}
 
 
@@ -77,9 +85,12 @@ public class UserService implements UserDetailsService {
                 () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
 
         if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            if (!user.isEnabled()) {
+                throw new IllegalStateException("Oops! It seems you haven't activated your account yet");
+            }
             return user;
         } else {
-            throw new IllegalStateException("Invalid password");
+            throw new IllegalStateException("Oops! The password you entered is incorrect");
         }
     }
 

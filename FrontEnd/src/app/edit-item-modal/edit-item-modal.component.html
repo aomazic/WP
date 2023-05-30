@@ -1,0 +1,49 @@
+
+
+<form [formGroup]="itemForm" (ngSubmit)="editItem()">
+  <h1>Add Item</h1>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" type="text" required>
+    <mat-error *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Price</mat-label>
+    <input matInput formControlName="price" type="number" required>
+    <mat-error *ngIf="itemForm.get('price')?.invalid && itemForm.get('price')?.touched">
+      Price is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description" type="text" required>
+    <mat-error *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched">
+      Description is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Image url</mat-label>
+    <input matInput formControlName="imageUrl" type="text" required>
+    <mat-error *ngIf="itemForm.get('imageUrl')?.invalid && itemForm.get('imageUrl')?.touched">
+      Image is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <input matInput formControlName="category" type="text" required>
+    <mat-error *ngIf="itemForm.get('category')?.invalid && itemForm.get('category')?.touched">
+      Category is required
+    </mat-error>
+  </mat-form-field>
+
+  <div class="modal-buttons">
+    <button mat-raised-button color="primary" type="submit" [disabled]="itemForm.invalid">Save</button>
+    <button mat-raised-button color="primary" type="button" (click)="closeModal()">Cancel</button>
+  </div>
+</form>

@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {User} from "./user.model";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,13 @@ export class RegistrationService {
     const url = `${this.baseUrl}/register`;
     return this.http.post(url, user, { responseType: 'text' });
   }
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/login?email=${email}&password=${password}`;
-    return this.http.get<User>(url);
+    return this.http.get<any>(url);
   }
+  resendEmail(email: string): Observable<string> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get(`${this.baseUrl}/resend`, { params, responseType: 'text' });
+  }
+
 }

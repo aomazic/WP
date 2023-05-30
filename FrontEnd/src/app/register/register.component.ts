@@ -3,6 +3,7 @@ import {User} from "../user.model";
 import {RegistrationService} from "../registration.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 
 
@@ -25,7 +26,7 @@ export class RegisterComponent {
     terms: new FormControl('', Validators.required)
   });
 
-  constructor(private registrationService: RegistrationService, private snackBar:  MatSnackBar) { }
+  constructor(private registrationService: RegistrationService, private snackBar:  MatSnackBar, private router: Router) { }
 
   onRegister(): void {
     if(this.registerForm.get('password')?.value != this.registerForm.get('confirmPassword')?.value){
@@ -51,14 +52,16 @@ export class RegisterComponent {
             });
         }
         else {
-
+          const email = this.registerForm.get('email')?.value;
+          this.router.navigate(['/confirm-email'], { queryParams: { email: email } }).then(() => {
+          })
+            .catch((error) => {
+              console.log('Error occurred during navigation:', error);
+            });
           }
       },
       error: (error) => {
         console.log(error);
-      },
-      complete: () => {
-        console.log('Registration successful!');
       }
 
     });

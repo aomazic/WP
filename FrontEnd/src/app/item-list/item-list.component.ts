@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ItemFull } from "../itemFull.model";
-import { CartItem } from "../cart.model";
+import { ItemFull } from "../models/itemFull.model";
+import { CartItem } from "../models/cart.model";
 import { EditItemModalComponent } from "../edit-item-modal/edit-item-modal.component";
 import { MatDialog } from "@angular/material/dialog";
 import { ItemService } from "../item.service";
@@ -35,6 +35,9 @@ export class ItemListComponent {
   }
 
   addToCart(item: ItemFull) {
+    this.snackBar.open("Item added to cart", 'OK', {
+      duration: 3000
+    });
     const existingCartItem = this.cart.find(cartItem => cartItem.item.id === item.id);
     if (existingCartItem) {
       existingCartItem.quantity++;
@@ -47,15 +50,16 @@ export class ItemListComponent {
         totalPrice: item.price,
       };
       this.cart.push(newCartItem);
+      localStorage.setItem('cart', JSON.stringify(this.cart));
       this.totalPrice += item.price;
     }
-    this.totalPriceChanged.emit(this.totalPrice); // Emit totalPrice change event
+    this.totalPriceChanged.emit(this.totalPrice);
   }
 
   openEditModal(item: ItemFull) {
     const dialogRef = this.dialog.open(EditItemModalComponent, {
       width: '50%',
-      data: item, // Pass the item data to the modal component
+      data: item,
     });
     dialogRef.afterClosed().subscribe((result: ItemFull) => {
       this.getAllItems();

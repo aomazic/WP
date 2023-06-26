@@ -9,5 +9,4 @@ export class UserFull{
   authorities: any[];
   credentialsNonExpired: boolean;
   enabled: boolean;
-  shoppingPoints: number;
 }

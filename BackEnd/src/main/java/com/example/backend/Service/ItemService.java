@@ -1,7 +1,9 @@
 package com.example.backend.Service;
 
 import com.example.backend.Repo.ItemRepository;
+import com.example.backend.Repo.OrderRepository;
 import com.example.backend.model.Item;
+import com.example.backend.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.stream.Collectors;
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository) {
+    public ItemService(ItemRepository itemRepository,  OrderRepository orderRepository) {
         this.itemRepository = itemRepository;
+        this.orderRepository = orderRepository;
     }
 
     public List<Item> getAllItems() {
@@ -43,5 +47,7 @@ public class ItemService {
                 .filter(item -> item.getName().toLowerCase().contains(searchTerm.toLowerCase()))
                 .collect(Collectors.toList());
     }
-
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
 }

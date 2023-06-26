@@ -35,8 +35,13 @@
         <input matInput formControlName="zipCode" placeholder="Zip Code">
       </mat-form-field>
     </div>
-    <p class="shopping-points">Your shopping points: {{ shoppingPoints }}</p>
-
+    <div class="formField promoCode">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter promo code</mat-label>
+        <input matInput formControlName="zipCode" placeholder="PromoCode">
+      </mat-form-field>
+    </div>
+    <p class="price">Total price: {{ totalPrice }}€</p>
     <div class="buttons">
       <button mat-raised-button color="warn" class="cancel-button" (click)="CancelCheckout()">Cancel</button>
       <button mat-raised-button color="primary" class="confirm-button" (click)="ConfirmCheckout()">Confirm</button>

@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ItemService} from "../item.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Item} from "../item.model";
+import {Item} from "../models/item.model";
 
 @Component({
   selector: 'app-edit-item-modal',

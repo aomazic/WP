@@ -2,6 +2,7 @@ package com.example.backend.Controller;
 
 import com.example.backend.Service.ItemService;
 import com.example.backend.model.Item;
+import com.example.backend.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,6 @@ public class ItemController {
         List<Item> items = itemService.getAllItems();
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable Long id) {
         Optional<Item> item = itemService.getItemById(id);
@@ -67,5 +67,9 @@ public class ItemController {
         List<Item> filteredItems = itemService.filterItems(searchTerm);
         return new ResponseEntity<>(filteredItems, HttpStatus.OK);
     }
-
+    @PostMapping("/order")
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        Order savedOrder = itemService.saveOrder(order);
+        return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
+    }
 }

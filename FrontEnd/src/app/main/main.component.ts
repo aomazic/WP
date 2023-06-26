@@ -1,23 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {RegistrationService} from "../registration.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {UserFull} from "../userFull.model";
-import {MatDialog} from "@angular/material/dialog";
-import {AdItemModalComponent} from "../ad-item-modal/ad-item-modal.component";
-import {ItemFull} from "../itemFull.model";
-import {ItemService} from "../item.service";
-import {EditItemModalComponent} from "../edit-item-modal/edit-item-modal.component";
-import {CartItem} from "../cart.model";
-import {Router} from "@angular/router";
-
+import { RegistrationService } from "../registration.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { UserFull } from "../models/userFull.model";
+import { MatDialog } from "@angular/material/dialog";
+import { AdItemModalComponent } from "../ad-item-modal/ad-item-modal.component";
+import { ItemFull } from "../models/itemFull.model";
+import { ItemService } from "../item.service";
+import { EditItemModalComponent } from "../edit-item-modal/edit-item-modal.component";
+import { CartItem } from "../models/cart.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit{
+export class MainComponent implements OnInit {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)
@@ -30,32 +29,61 @@ export class MainComponent implements OnInit{
   items: ItemFull[] = [];
   totalPrice: number = 0;
   isCheckout: boolean = false;
-  constructor(private registrationService: RegistrationService, private snackBar : MatSnackBar, private dialog: MatDialog, private itemService: ItemService, private router: Router) {}
+
+  constructor(
+    private registrationService: RegistrationService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private itemService: ItemService,
+    private router: Router
+  ) { }
+
   ngOnInit() {
+    this.retrieveCart();
     this.getAllItems();
+    this.retrieveLoginInfo();
   }
+
   onLoginFormSubmit() {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email || '';
       const password = this.loginForm.value.password || '';
-      this.registrationService.login(email, password).subscribe(
-        {
-          next: (response: UserFull) => {
-           this.user = response;
-           console.log(this.user);
-          },
-          error: (error: any) => {
-              this.snackBar.open(error.error.message, 'OK', {
-                  duration: 3000
-              });
+      this.login(email, password);
+    }
+  }
 
-          }
+  saveLoginInfo(email: string, password: string) {
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+  }
+
+  login(email: string, password: string){
+    this.registrationService.login(email, password).subscribe(
+      {
+        next: (response: UserFull) => {
+          this.user = response;
+          console.log(this.user);
+          this.saveLoginInfo(email, password); // Save login information
+        },
+        error: (error: any) => {
+          this.snackBar.open(error.error.message, 'OK', {
+            duration: 3000
+          });
         }
-      );
+      }
+    );
+  }
+  retrieveLoginInfo() {
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
+    if (email && password) {
+      this.login(email, password);
     }
   }
   logout() {
     this.user = null;
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
   }
 
   openModal() {
@@ -72,7 +100,7 @@ export class MainComponent implements OnInit{
     this.filterItems();
   }
 
-  public getAllItems() {
+  getAllItems() {
     this.itemService.getAllItems().subscribe(
       {
         next: (items: ItemFull[]) => {
@@ -82,42 +110,40 @@ export class MainComponent implements OnInit{
           this.snackBar.open(error.error.message, 'OK', {
             duration: 3000
           });
-
         }
       }
     );
   }
 
-   filterItems() {
+  filterItems() {
     if (this.searchTerm === '') {
-           this.getAllItems();
-       } else {
-           this.itemService.filterItems(this.searchTerm).subscribe(
-               {
-                   next: (items: ItemFull[]) => {
-                       this.items = items;
-                   },
-                   error: (error: any) => {
-                       this.snackBar.open(error.error.message, 'OK', {
-                           duration: 3000
-                       });
-
-                   }
-               }
-           );
-       }
+      this.getAllItems();
+    } else {
+      this.itemService.filterItems(this.searchTerm).subscribe(
+        {
+          next: (items: ItemFull[]) => {
+            this.items = items;
+          },
+          error: (error: any) => {
+            this.snackBar.open(error.error.message, 'OK', {
+              duration: 3000
+            });
+          }
+        }
+      );
+    }
   }
-
-
 
   removeFromCart(index: number) {
     this.cart.splice(index, 1);
     this.calculateTotalPrice();
+    this.saveCart();
   }
 
   updateCartItem(cartItem: CartItem) {
     cartItem.totalPrice = cartItem.item.price * cartItem.quantity;
     this.calculateTotalPrice();
+    this.saveCart();
   }
 
   calculateTotalPrice() {
@@ -129,4 +155,16 @@ export class MainComponent implements OnInit{
   }
 
   protected readonly event = event;
+
+  saveCart() {
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
+
+  retrieveCart() {
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      this.cart = JSON.parse(cartData);
+      this.calculateTotalPrice();
+    }
+  }
 }

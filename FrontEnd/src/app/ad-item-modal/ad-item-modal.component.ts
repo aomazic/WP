@@ -2,8 +2,8 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ItemService} from "../item.service";
-import {UserFull} from "../userFull.model";
-import {Item} from "../item.model";
+import {UserFull} from "../models/userFull.model";
+import {Item} from "../models/item.model";
 
 @Component({
   selector: 'app-ad-item-modal',

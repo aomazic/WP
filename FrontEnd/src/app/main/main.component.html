@@ -35,7 +35,6 @@
         </div>
         <div class="user-info" *ngIf="user">
           <span class="username">Username: {{ user.username }}</span>
-          <span class="shopping-points">Shopping Points: {{ user.shoppingPoints }}</span>
           <button mat-raised-button color="primary" (click)="logout()">Logout</button>
           <button mat-raised-button color="primary" class="admin-button" *ngIf="user?.userRole === 'ADMIN'" (click)="openModal()">Add Item</button>
         </div>
@@ -92,7 +91,6 @@
     <app-checout
       [cart]="cart"
       [totalPrice]="totalPrice"
-      [shoppingPoints]="user?.shoppingPoints"
       (cancelCheckoutRequested)="isCheckout = $event"
     ></app-checout>
   </ng-container>

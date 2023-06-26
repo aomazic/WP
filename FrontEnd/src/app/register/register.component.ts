@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {User} from "../user.model";
+import {User} from "../models/user.model";
 import {RegistrationService} from "../registration.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";

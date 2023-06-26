@@ -67,3 +67,14 @@ mat-form-field{
 
   width: 30%;
 }
+
+.promoCode{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.promoCode mat-form-field{
+
+  width: 50%;
+}

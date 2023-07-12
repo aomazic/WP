@@ -30,13 +30,16 @@ public class Order {
     @Column(nullable = false)
     private String zipCode;
 
+    @Column(nullable = false)
+    private float totalPrice;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<CartItem> items;
 
     public Order() {
     }
 
-    public Order(String firstName, String lastName, String email, String address, String city, String zipCode, List<CartItem> items) {
+    public Order(String firstName, String lastName, String email, String address, String city, String zipCode, List<CartItem> items,  float totalPrice) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -44,9 +47,8 @@ public class Order {
         this.city = city;
         this.zipCode = zipCode;
         this.items = items;
+        this.totalPrice = totalPrice;
     }
-
-    // Getters and setters
 
     public Long getId() {
         return id;
@@ -106,6 +108,12 @@ public class Order {
 
     public List<CartItem> getItems() {
         return items;
+    }
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public void setItems(List<CartItem> items) {

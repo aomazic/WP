@@ -16,10 +16,13 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
 
+    private final EmailService  emailService;
+
     @Autowired
-    public ItemService(ItemRepository itemRepository,  OrderRepository orderRepository) {
+    public ItemService(ItemRepository itemRepository,  OrderRepository orderRepository, EmailService emailService) {
         this.itemRepository = itemRepository;
         this.orderRepository = orderRepository;
+        this.emailService = emailService;
     }
 
     public List<Item> getAllItems() {
@@ -48,6 +51,7 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
     public Order saveOrder(Order order) {
+        emailService.sendOrder(order);
         return orderRepository.save(order);
     }
 }

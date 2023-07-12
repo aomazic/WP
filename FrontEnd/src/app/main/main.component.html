@@ -57,8 +57,8 @@
             <div class="cart-item-details">
               <h3>{{ cartItem.item.name }}</h3>
               <div class="cart-item-controls">
-                <input type="number" min="1" [(ngModel)]="cartItem.quantity" (input)="updateCartItem(cartItem)">
-                <button mat-icon-button aria-label="Remove" color="primary" (click)="removeFromCart(i)">
+                <input type="number" min="1" [(ngModel)]="cartItem.quantity" *ngIf="!isCheckout" (input)="updateCartItem(cartItem)">
+                <button mat-icon-button aria-label="Remove" color="primary" *ngIf="!isCheckout" (click)="removeFromCart(i)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
@@ -82,16 +82,16 @@
       [user]="user"
       [cart]="cart"
       [totalPrice]="totalPrice"
-      (getAllItemsRequested)="getAllItems()"
       (totalPriceChanged)="totalPrice = $event"
     ></app-item-list>
   </ng-container>
 
   <ng-container *ngIf="isCheckout">
-    <app-checout
+    <app-checkout
       [cart]="cart"
       [totalPrice]="totalPrice"
       (cancelCheckoutRequested)="isCheckout = $event"
-    ></app-checout>
+      (checkoutCompleted)="onCheckoutCompleted()"
+    ></app-checkout>
   </ng-container>
 </main>

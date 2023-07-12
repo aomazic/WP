@@ -7,7 +7,7 @@ import { ItemService } from "../item.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-checout',
+  selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
@@ -16,6 +16,10 @@ export class CheckoutComponent implements OnInit{
   @Input() totalPrice: number;
   @Input() shoppingPoints: number | undefined;
   @Output() cancelCheckoutRequested = new EventEmitter<boolean>();
+  @Output() checkoutCompleted = new EventEmitter<void>();
+  isPromoCodeApplied: boolean = false;
+  discount: number = 0;
+  discountedPrice: number = 0;
 
   checkoutForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -23,7 +27,8 @@ export class CheckoutComponent implements OnInit{
     lastName: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
-    zipCode: new FormControl('', [Validators.required])
+    zipCode: new FormControl('', [Validators.required]),
+    promoCode: new FormControl('')
   });
 
   ngOnInit() {
@@ -31,12 +36,47 @@ export class CheckoutComponent implements OnInit{
     if (SavedEmail) {
         this.checkoutForm.get('email')?.setValue(SavedEmail);
     }
+    const SavedDiscount = localStorage.getItem('discount');
+    if (SavedDiscount) {
+      this.discount = parseInt(SavedDiscount);
+      this.checkoutForm.get('promoCode')?.setValue(SavedDiscount);
+      this.isPromoCodeApplied = true;
+      this.checkoutForm.get('promoCode')?.disable();
+      this.discountedPrice = this.totalPrice * (100 - this.discount)/100;
+    }
+    else {
+        this.discountedPrice = this.totalPrice;
+    }
+    const promoCode = localStorage.getItem('promoCode');
+    if (promoCode) {
+      this.checkoutForm.get('promoCode')?.setValue(promoCode);
+    }
   }
 
   constructor(private itemService: ItemService, private snackBar:  MatSnackBar) { }
 
   CancelCheckout() {
     this.cancelCheckoutRequested.emit(false);
+  }
+  UsePromoCode() {
+    const promoCode = this.checkoutForm.get('promoCode')?.value || "";
+    this.itemService.usePromoCode(promoCode).subscribe({
+      next: (response: string) => {
+        this.discount = parseInt(response);
+        localStorage.setItem('discount', JSON.stringify(this.discount));
+        localStorage.setItem('promoCode', JSON.stringify(promoCode));
+        this.totalPrice -= this.discount;
+        this.isPromoCodeApplied = true;
+        this.checkoutForm.get('promoCode')?.disable();
+        this.discountedPrice = this.totalPrice * (100 - this.discount)/100;
+      },
+      error: (error) => {
+        console.log(error);
+        this.snackBar.open(error.error.message, 'Close', {
+          duration: 10000,
+        });
+      }
+    });
   }
 
   ConfirmCheckout() {
@@ -47,7 +87,8 @@ export class CheckoutComponent implements OnInit{
       address: this.checkoutForm.get('address')?.value || "",
       city: this.checkoutForm.get('city')?.value || "",
       zipCode: this.checkoutForm.get('zipCode')?.value  || "",
-      items: this.cart
+      items: this.cart,
+      totalPrice: this.discountedPrice,
     };
 
     this.itemService.placeOrder(order).subscribe({
@@ -59,12 +100,22 @@ export class CheckoutComponent implements OnInit{
         this.cart = [];
         this.totalPrice = 0;
         localStorage.removeItem('cart');
+        this.ResetPromoCode();
         this.CancelCheckout();
+        this.checkoutCompleted.emit();
       },
-      error: (error) => {
-        console.log(order);
-        console.error('Error saving order:', error);
-      }
-    });
+      error: () => {
+       this.snackBar.open('Error placing order', 'Close', {
+         duration: 10000,
+         });
+       }
+      });
+  }
+  ResetPromoCode() {
+    this.discount = 0;
+    localStorage.removeItem('discount');
+    localStorage.removeItem('promoCode');
+    this.isPromoCodeApplied = false;
+    this.checkoutForm.get('promoCode')?.enable();
   }
 }

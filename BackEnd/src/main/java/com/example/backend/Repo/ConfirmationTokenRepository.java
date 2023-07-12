@@ -1,6 +1,6 @@
 package com.example.backend.Repo;
 
-import com.example.backend.Token.ConfirmationToken;
+import com.example.backend.model.Token.ConfirmationToken;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

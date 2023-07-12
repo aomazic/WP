@@ -67,4 +67,12 @@ export class RegisterComponent {
     });
   }
 
+  cancel(): void {
+    this.router.navigate(['/']).then(() => {
+      })
+          .catch((error) => {
+              console.log('Error occurred during navigation:', error);
+          });
+  }
+
 }

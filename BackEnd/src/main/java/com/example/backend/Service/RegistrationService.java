@@ -1,6 +1,6 @@
 package com.example.backend.Service;
 
-import com.example.backend.Token.ConfirmationToken;
+import com.example.backend.model.Token.ConfirmationToken;
 import com.example.backend.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

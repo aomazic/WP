@@ -1,4 +1,4 @@
-package com.example.backend.Token;
+package com.example.backend.model.Token;
 
 import com.example.backend.model.User.User;
 import jakarta.persistence.*;

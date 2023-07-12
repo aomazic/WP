@@ -63,7 +63,9 @@ button:active {
   background-color: #e65c00 !important;
   color: white !important;
 }
-
+.cancel-button{
+  margin-top: 1em;
+}
 
 @media screen and (min-width: 968px) {
   form {

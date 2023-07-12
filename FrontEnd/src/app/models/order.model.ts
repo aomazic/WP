@@ -9,4 +9,5 @@ export interface Order {
   city: string;
   zipCode: string;
   items: CartItem[];
+  totalPrice: number;
 }

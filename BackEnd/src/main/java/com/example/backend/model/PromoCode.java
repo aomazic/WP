@@ -23,7 +23,6 @@ public class PromoCode {
     private LocalDateTime expiresAt;
 
     public PromoCode() {
-
     }
 
     public PromoCode(String promoCode, int discount, LocalDateTime createdAt, LocalDateTime expiresAt) {

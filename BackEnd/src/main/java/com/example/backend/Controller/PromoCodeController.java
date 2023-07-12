@@ -21,9 +21,9 @@ public class PromoCodeController {
         PromoCode promoCode = promoCodeService.insertPromoCode(discount);
         return new ResponseEntity<>(promoCode, HttpStatus.CREATED);
     }
-    @DeleteMapping("/use")
-    public ResponseEntity<String> usePromoCode(@RequestParam String promoCode){
-        String response = promoCodeService.usePromoCode(promoCode);
+    @GetMapping("/use")
+    public ResponseEntity<Integer> usePromoCode(@RequestParam String promoCode){
+        int response = promoCodeService.usePromoCode(promoCode);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

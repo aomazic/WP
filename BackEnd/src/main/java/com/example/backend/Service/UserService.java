@@ -1,7 +1,7 @@
 package com.example.backend.Service;
 
 import com.example.backend.Repo.UserRepository;
-import com.example.backend.Token.ConfirmationToken;
+import com.example.backend.model.Token.ConfirmationToken;
 import com.example.backend.model.User.User;
 import com.example.backend.model.User.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
                     user.getUsername(),
                     encodedPassword,
                     user.getEmail(),
-                    UserRole.ADMIN,
+                    UserRole.USER,
                     false,
                     false
                     );

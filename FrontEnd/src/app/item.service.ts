@@ -44,4 +44,9 @@ export class ItemService {
     return this.http.post<Order>(`${this.baseUrl}/order`, order);
   }
 
+  usePromoCode(promoCode: string): Observable<any> {
+    const params = new HttpParams().set('promoCode', promoCode);
+    const url = `http://localhost:8080/api/promocode/use`;
+    return this.http.get<any>(url, { params });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from "../registration.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -30,12 +30,12 @@ export class MainComponent implements OnInit {
   totalPrice: number = 0;
   isCheckout: boolean = false;
 
+
   constructor(
     private registrationService: RegistrationService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private itemService: ItemService,
-    private router: Router
   ) { }
 
   ngOnInit() {
@@ -156,10 +156,13 @@ export class MainComponent implements OnInit {
 
   protected readonly event = event;
 
+
   saveCart() {
     localStorage.setItem('cart', JSON.stringify(this.cart));
   }
-
+  onCheckoutCompleted() {
+    this.cart = [];
+  }
   retrieveCart() {
     const cartData = localStorage.getItem('cart');
     if (cartData) {

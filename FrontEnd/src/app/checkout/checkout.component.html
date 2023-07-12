@@ -3,48 +3,53 @@
     <div class="name">
       <mat-form-field appearance="fill" id="firstName">
         <mat-label>First Name</mat-label>
-        <input matInput formControlName="firstName" placeholder="First Name">
+        <input matInput formControlName="firstName" placeholder="First Name" required>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" placeholder="Last Name">
+        <input matInput formControlName="lastName" placeholder="Last Name" required>
       </mat-form-field>
     </div>
     <div class="formField">
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput type="text" formControlName="email" placeholder="Email">
+        <input matInput type="text" formControlName="email" placeholder="Email" required>
       </mat-form-field>
     </div>
     <div class="formField">
       <mat-form-field appearance="fill">
         <mat-label>Address</mat-label>
-        <input matInput formControlName="address" placeholder="Address">
+        <input matInput formControlName="address" placeholder="Address" required>
       </mat-form-field>
     </div>
     <div class="formField">
       <mat-form-field appearance="fill">
         <mat-label>City</mat-label>
-        <input matInput formControlName="city" placeholder="City">
+        <input matInput formControlName="city" placeholder="City" required>
       </mat-form-field>
     </div>
     <div class="formField">
       <mat-form-field appearance="fill">
         <mat-label>Zip Code</mat-label>
-        <input matInput formControlName="zipCode" placeholder="Zip Code">
+        <input matInput formControlName="zipCode" placeholder="Zip Code" required>
       </mat-form-field>
     </div>
     <div class="formField promoCode">
       <mat-form-field appearance="fill">
         <mat-label>Enter promo code</mat-label>
-        <input matInput formControlName="zipCode" placeholder="PromoCode">
+        <input matInput formControlName="promoCode" placeholder="PromoCode" >
       </mat-form-field>
+      <button mat-raised-button class="promoCodeButton" [disabled]="isPromoCodeApplied" (click)="UsePromoCode()">Use promo-code</button>
     </div>
-    <p class="price">Total price: {{ totalPrice }}€</p>
+    <div class="price">
+      <p>Total price: <span [ngClass]="{ 'discounted': isPromoCodeApplied }">{{ totalPrice }}€</span></p>
+      <p *ngIf="isPromoCodeApplied" class="discounted-price">Discounted price: {{ discountedPrice }}€</p>
+    </div>
     <div class="buttons">
       <button mat-raised-button color="warn" class="cancel-button" (click)="CancelCheckout()">Cancel</button>
-      <button mat-raised-button color="primary" class="confirm-button" (click)="ConfirmCheckout()">Confirm</button>
+      <button mat-raised-button color="primary" class="confirm-button" (click)="ConfirmCheckout()" [disabled]="checkoutForm.invalid" [ngClass]="{'disabled-button': checkoutForm.invalid}">Confirm</button>
+
     </div>
   </form>
 

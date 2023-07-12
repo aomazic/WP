@@ -22,6 +22,10 @@ form {
 }
 .formField
 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   margin-top: 1em;
   width: 80%
 }
@@ -77,4 +81,16 @@ mat-form-field{
 .promoCode mat-form-field{
 
   width: 50%;
+}
+
+.promoCodeButton{
+
+  margin-left: 1em;
+}
+.discounted {
+  color: red;
+  font-weight: bold;
+}
+.disabled-button {
+  opacity: 0.8;
 }

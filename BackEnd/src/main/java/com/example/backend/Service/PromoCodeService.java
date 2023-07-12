@@ -37,7 +37,7 @@ public class PromoCodeService {
         return promoCode1;
     }
 
-    public String usePromoCode(String promoCode) {
+    public int usePromoCode(String promoCode) {
         PromoCode promoCode1 = promoCodeRepository.findByPromoCode(promoCode);
 
         if (promoCode1 == null) {
@@ -48,8 +48,9 @@ public class PromoCodeService {
             if (promoCode1.getExpiresAt().toLocalTime().isAfter(LocalDateTime.now().toLocalTime())) {
                 throw new RuntimeException("PromoCode is expired");
             } else {
+                int discount = promoCode1.getDiscount();
                 deletePromoCode(promoCode1.getId());
-                return "Success";
+                return discount;
             }
         }
     }

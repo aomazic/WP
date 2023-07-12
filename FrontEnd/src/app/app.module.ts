@@ -23,7 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { EditItemModalComponent } from './edit-item-modal/edit-item-modal.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ItemListComponent } from './item-list/item-list.component';
-import { CheckoutComponent } from './checout/checkout.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,

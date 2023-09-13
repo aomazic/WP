@@ -8,4 +8,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="050f5986-8a41-412d-a3ba-1dd35a30b6d5" />
+  </component>
 </module>

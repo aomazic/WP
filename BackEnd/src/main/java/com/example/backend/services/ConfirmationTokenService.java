@@ -1,6 +1,6 @@
-package com.example.backend.Service;
+package com.example.backend.services;
 
-import com.example.backend.Repo.ConfirmationTokenRepository;
+import com.example.backend.repos.ConfirmationTokenRepository;
 import com.example.backend.model.Token.ConfirmationToken;
 import com.example.backend.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ConfirmationTokenService {
@@ -28,7 +29,7 @@ public class ConfirmationTokenService {
     }
 
     public String getToken(User user) {
-        String token = user.getEmail();
+        String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),

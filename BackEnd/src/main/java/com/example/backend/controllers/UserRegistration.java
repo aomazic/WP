@@ -1,6 +1,6 @@
-package com.example.backend.Controller;
+package com.example.backend.controllers;
 
-import com.example.backend.Service.RegistrationService;
+import com.example.backend.services.RegistrationService;
 import com.example.backend.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

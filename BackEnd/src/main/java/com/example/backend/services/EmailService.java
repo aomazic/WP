@@ -1,4 +1,4 @@
-package com.example.backend.Service;
+package com.example.backend.services;
 
 import com.example.backend.model.CartItem;
 import com.example.backend.model.Order;
@@ -36,7 +36,7 @@ public class EmailService{
         }
         catch (MessagingException e) {
             logger.error("failed to send email", e);
-            throw new IllegalStateException("failed to send email");
+            throw new IllegalStateException("failed to send email:");
         }
     }
     @Async

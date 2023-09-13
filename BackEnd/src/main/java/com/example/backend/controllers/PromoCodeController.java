@@ -1,7 +1,6 @@
-package com.example.backend.Controller;
+package com.example.backend.controllers;
 
-import com.example.backend.Service.PromoCodeService;
-import com.example.backend.model.Item;
+import com.example.backend.services.PromoCodeService;
 import com.example.backend.model.PromoCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
-package com.example.backend.Service;
+package com.example.backend.services;
 
-import com.example.backend.Repo.ItemRepository;
-import com.example.backend.Repo.OrderRepository;
+import com.example.backend.repos.ItemRepository;
+import com.example.backend.repos.OrderRepository;
 import com.example.backend.model.Item;
 import com.example.backend.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;

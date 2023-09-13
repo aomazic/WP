@@ -1,6 +1,6 @@
-package com.example.backend.Service;
+package com.example.backend.services;
 
-import com.example.backend.Repo.UserRepository;
+import com.example.backend.repos.UserRepository;
 import com.example.backend.model.Token.ConfirmationToken;
 import com.example.backend.model.User.User;
 import com.example.backend.model.User.UserRole;

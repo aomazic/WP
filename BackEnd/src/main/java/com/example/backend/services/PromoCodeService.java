@@ -1,12 +1,8 @@
-package com.example.backend.Service;
+package com.example.backend.services;
 
-import com.example.backend.Repo.ItemRepository;
-import com.example.backend.Repo.OrderRepository;
-import com.example.backend.Repo.PromoCodeRepository;
+import com.example.backend.repos.PromoCodeRepository;
 import com.example.backend.model.PromoCode;
-import com.example.backend.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

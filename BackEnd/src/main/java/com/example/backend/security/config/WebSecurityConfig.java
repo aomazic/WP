@@ -1,6 +1,6 @@
-package com.example.backend.Security.config;
+package com.example.backend.security.config;
 
-import com.example.backend.Service.UserService;
+import com.example.backend.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,15 +21,12 @@ public class WebSecurityConfig{
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeHttpRequests().anyRequest().permitAll();
         return http.build();
     }
-
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

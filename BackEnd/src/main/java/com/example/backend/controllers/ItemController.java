@@ -1,6 +1,6 @@
-package com.example.backend.Controller;
+package com.example.backend.controllers;
 
-import com.example.backend.Service.ItemService;
+import com.example.backend.services.ItemService;
 import com.example.backend.model.Item;
 import com.example.backend.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +49,13 @@ public class ItemController {
     public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item updatedItem) {
         Optional<Item> existingItem = itemService.getItemById(id);
         if (existingItem.isPresent()) {
-            Item ItemToUpdate = existingItem.get();
-            ItemToUpdate.setName(updatedItem.getName());
-            ItemToUpdate.setPrice(updatedItem.getPrice());
-            ItemToUpdate.setDescription(updatedItem.getDescription());
-            ItemToUpdate.setImageUrl(updatedItem.getImageUrl());
-            ItemToUpdate.setCategory(updatedItem.getCategory());
-            updatedItem = itemService.updateItem(ItemToUpdate);
+            Item itemToUpdate = existingItem.get();
+            itemToUpdate.setName(updatedItem.getName());
+            itemToUpdate.setPrice(updatedItem.getPrice());
+            itemToUpdate.setDescription(updatedItem.getDescription());
+            itemToUpdate.setImageUrl(updatedItem.getImageUrl());
+            itemToUpdate.setCategory(updatedItem.getCategory());
+            updatedItem = itemService.updateItem(itemToUpdate);
             return new ResponseEntity<>(updatedItem, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="aperture@localhost" uuid="09964030-b495-49fd-92fe-c6905f3b77a5">
+    <data-source source="LOCAL" name="aperture@localhost" uuid="a12ec698-bf0b-4663-9f9a-dbd31adc9216">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

@@ -154,8 +154,6 @@ export class MainComponent implements OnInit {
     this.isCheckout = true;
   }
 
-  protected readonly event = event;
-
 
   saveCart() {
     localStorage.setItem('cart', JSON.stringify(this.cart));

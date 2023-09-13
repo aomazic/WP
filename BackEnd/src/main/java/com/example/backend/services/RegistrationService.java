@@ -1,4 +1,4 @@
-package com.example.backend.Service;
+package com.example.backend.services;
 
 import com.example.backend.model.Token.ConfirmationToken;
 import com.example.backend.model.User.User;

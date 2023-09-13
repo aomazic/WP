@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  # MySQL Database Service
+  mysql_db:
+    image: mysql:5.7
+    container_name: aperture_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: aperture
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # Mailhog Service for testing email functionality
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog_server
+    ports:
+      - "1025:1025"   # SMTP server
+      - "8025:8025"   # Web UI
+
+volumes:
+  mysql_data:

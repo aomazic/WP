@@ -1,4 +1,4 @@
-package com.example.backend.Repo;
+package com.example.backend.repos;
 
 import com.example.backend.model.PromoCode;
 import io.micrometer.common.lang.NonNull;

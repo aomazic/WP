@@ -32,17 +32,27 @@ These instructions will get you a copy of the project up and running on your loc
    ng serve
    ```
 
-### Running the Application
-Backend:
-The backend service will run on http://localhost:8080.
+# Application Overview
+This project is composed of two main components: a **backend service** and a **frontend application**.
 
-Frontend:
-The frontend application will run on http://localhost:4200.
+## Backend
+- **Technology**: Spring Boot  
+- **Runs on**: `http://localhost:8080`
 
-### Project Structure
-#### Modules
-BackEnd: Main backend service - Spring Boot
-FrontEnd: GUI - Angular
+## Frontend
+- **Technology**: Angular  
+- **Runs on**: `http://localhost:4200`
 
-### License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+## Project Structure
+
+### Modules
+1. **Backend**:  
+   - The main backend service.  
+   - Built with Spring Boot.
+
+2. **Frontend**:  
+   - The graphical user interface.  
+   - Developed using Angular.
+
+## License
+This project is licensed under the **MIT License**.  
